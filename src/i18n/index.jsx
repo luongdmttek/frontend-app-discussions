@@ -8,6 +8,7 @@ import frFRMessages from './messages/fr_FR.json';
 import itITMessages from './messages/it_IT.json';
 import plMessages from './messages/pl.json';
 import trTRMessages from './messages/tr_TR.json';
+import viMessages from './messages/vi.json';
 import zhcnMessages from './messages/zh_CN.json';
 
 const messages = {
@@ -20,6 +21,7 @@ const messages = {
   'it-it': itITMessages,
   pl: plMessages,
   'tr-tr': trTRMessages,
+  vi: viMessages,
   'zh-cn': zhcnMessages,
 };
 
