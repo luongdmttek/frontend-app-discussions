@@ -17,6 +17,7 @@ import { DiscussionContext } from './context';
 function AuthorLabel({
   intl,
   author,
+  authorName,
   authorLabel,
   linkToProfile,
   labelColor,
@@ -53,7 +54,7 @@ function AuthorLabel({
         role="heading"
         aria-level="2"
       >
-        {isRetiredUser ? '[Deactivated]' : author }
+        {isRetiredUser ? '[Deactivated]' : authorName }
       </span>
       {icon && (
         <Icon
@@ -96,6 +97,7 @@ function AuthorLabel({
 AuthorLabel.propTypes = {
   intl: intlShape.isRequired,
   author: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
   authorLabel: PropTypes.string,
   linkToProfile: PropTypes.bool,
   labelColor: PropTypes.string,
@@ -104,6 +106,7 @@ AuthorLabel.propTypes = {
 
 AuthorLabel.defaultProps = {
   linkToProfile: false,
+  authorName: null,
   authorLabel: null,
   labelColor: '',
   alert: false,

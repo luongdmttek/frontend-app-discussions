@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useContext, useEffect, useMemo,
+  useCallback, useContext, useEffect, useMemo, useState
 } from 'react';
 
 import capitalize from 'lodash/capitalize';
@@ -28,6 +28,7 @@ import NoResults from '../posts/NoResults';
 import { PostLink } from '../posts/post';
 import { discussionsPath, filterPosts } from '../utils';
 import { fetchUserPosts } from './data/thunks';
+import { getUserProfile } from './data/api';
 import LearnerPostFilterBar from './learner-post-filter-bar/LearnerPostFilterBar';
 import messages from './messages';
 
@@ -43,6 +44,7 @@ function LearnerPostsView({ intl }) {
   const nextPage = useSelector(selectThreadNextPage());
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   const userIsStaff = useSelector(selectUserIsStaff);
+  const [profileName, setProfileName] = useState(username)
 
   const loadMorePosts = (pageNum = undefined) => {
     const params = {
@@ -56,9 +58,17 @@ function LearnerPostsView({ intl }) {
     dispatch(fetchUserPosts(courseId, params));
   };
 
+  const fetchUserProfile = () => {
+    getUserProfile(username)
+    .then(data => {
+      setProfileName(data.name)
+    })
+  }
+
   useEffect(() => {
     dispatch(clearPostsPages());
     loadMorePosts();
+    fetchUserProfile();
   }, [courseId, postFilter, username]);
 
   const checkIsSelected = (id) => window.location.pathname.includes(id);
@@ -89,7 +99,7 @@ function LearnerPostsView({ intl }) {
           alt={intl.formatMessage(messages.back)}
         />
         <div className="text-primary-500 font-style-normal font-family-inter font-weight-bold py-2.5">
-          {intl.formatMessage(messages.activityForLearner, { username: capitalize(username) })}
+          {intl.formatMessage(messages.activityForLearner, { username: profileName ? profileName : username })}
         </div>
         <div style={{ padding: '18px' }} />
       </div>

@@ -34,6 +34,16 @@ export async function getUserProfiles(usernames) {
 }
 
 /**
+ * Get user profile
+ * @param {string} username
+ */
+export async function getUserProfile(username) {
+  const url = `${getUserProfileApiUrl()}/${username}`;
+  const { data } = await getAuthenticatedHttpClient().get(url);
+  return data;
+}
+
+/**
  * Get the posts by a specific user in a course's discussions
  *
  * @param {string} courseId Course ID of the course

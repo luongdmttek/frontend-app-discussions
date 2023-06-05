@@ -42,7 +42,7 @@ function LearnerCard({
               <div
                 className="text-truncate font-weight-500 font-size-14 text-primary-500 font-style-normal font-family-inter"
               >
-                {learner.username}
+                {learner.name ? learner.name : learner.username}
               </div>
             </div>
             {learner.threads === null ? null : <LearnerFooter learner={learner} /> }

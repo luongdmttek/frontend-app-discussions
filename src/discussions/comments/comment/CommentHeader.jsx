@@ -59,6 +59,7 @@ function CommentHeader({
         <AuthorLabel
           author={comment.author}
           authorLabel={comment.authorLabel}
+          authorName={comment.authorName ? comment.authorName : comment.author}
           labelColor={colorClass && `text-${colorClass}`}
           linkToProfile
         />

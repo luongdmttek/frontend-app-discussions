@@ -84,7 +84,12 @@ function Reply({
           style={{ borderRadius: '0rem 0.375rem 0.375rem' }}
         >
           <div className="d-flex flex-row justify-content-between align-items-center mb-0.5">
-            <AuthorLabel author={reply.author} authorLabel={reply.authorLabel} labelColor={colorClass && `text-${colorClass}`} linkToProfile />
+            <AuthorLabel 
+              author={reply.author} 
+              authorName={reply.authorName ? reply.authorName : reply.author} 
+              authorLabel={reply.authorLabel} 
+              labelColor={colorClass && `text-${colorClass}`} 
+              linkToProfile />
             <ActionsDropdown
               commentOrPost={{
                 ...reply,
