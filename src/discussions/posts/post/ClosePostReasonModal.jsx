@@ -70,7 +70,7 @@ function ClosePostReasonModal({
           >
             <option key="empty" value="">---</option>
             {postCloseReasons.map(({ code, label }) => (
-              <option key={code} value={code}>{label}</option>
+              <option key={code} value={code}>{intl.formatMessage(messages.closeReasonLabel, {code: code.replaceAll('-', '_')})}</option>
             ))}
           </Form.Control>
         </Form.Group>

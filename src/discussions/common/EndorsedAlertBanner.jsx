@@ -48,6 +48,7 @@ function EndorsedAlertBanner({
             </span>
             <AuthorLabel
               author={content.endorsedBy}
+              authorName={content.endorsedByName}
               authorLabel={content.endorsedByLabel}
               linkToProfile
               alert={content.endorsed}

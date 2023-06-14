@@ -254,3 +254,33 @@ header {
     align-self: center;
   }
 }
+
+.nav-tabs {
+  border-bottom: unset;
+
+  .nav-link {
+
+    &:focus {
+      &::before {
+        border: unset;
+      }
+    }
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: $nav-pills-link-active-color;
+    background-color: $nav-pills-link-active-bg;
+    border-color: unset;
+
+    &:hover {
+      background-color: $nav-pills-link-active-bg;
+    }
+
+    &:focus {
+      &::before {
+        border: unset;
+      }
+    }
+  }
+}

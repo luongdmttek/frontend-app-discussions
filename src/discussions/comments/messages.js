@@ -187,6 +187,32 @@ const messages = defineMessages({
     defaultMessage: 'Thread not found',
     description: 'message to show on screen if the request thread is not found in course',
   },
+  editReasonLabel: {
+    id: 'discussion.editor.editReason.label',
+    defaultMessage: `{code, select,
+      grammar_spelling {Has grammar / spelling issues}
+      needs_clarity {Content needs clarity}
+      academic_integrity {Has academic integrity concern}
+      inappropriate_language {Has inappropriate language}
+      format_change {Formatting changes needed}
+      post_type_change {Post type needs change}
+      contains_pii {Contains personally identifiable information}
+      violates_guidelines {Violates community guidelines}
+      other {None}
+    }`,
+    description: 'Reason content for edit post/comment',
+  },
+  closeReasonLabel: {
+    id: 'discussion.editor.closeReason.label',
+    defaultMessage: `{code, select,
+      academic_integrity {Post violates honour code or academic integrity}
+      read_only {Post should be read-only}
+      duplicate {Post is a duplicate}
+      off_topic {Post is off-topic}
+      other {None}
+    }`,
+    description: 'Reason content for close post',
+  },
 });
 
 export default messages;

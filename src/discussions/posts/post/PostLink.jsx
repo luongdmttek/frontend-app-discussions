@@ -120,7 +120,7 @@ function PostLink({
             </div>
             <AuthorLabel
               author={post.author || intl.formatMessage(messages.anonymous)}
-              authorName={post.authorName ? post.authorName : post.author || intl.formatMessage(messages.anonymous)}
+              authorName={post.authorName}
               authorLabel={post.authorLabel}
               labelColor={authorLabelColor && `text-${authorLabelColor}`}
             />
