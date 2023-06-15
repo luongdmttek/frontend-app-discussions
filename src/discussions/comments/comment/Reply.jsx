@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { camelCase } from 'lodash';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as timeago from 'timeago.js';
@@ -39,7 +40,7 @@ function Reply({
     [ContentActions.DELETE]: showDeleteConfirmation,
     [ContentActions.REPORT]: () => dispatch(editComment(reply.id, { flagged: !reply.abuseFlagged })),
   };
-  const authorAvatars = useSelector(selectAuthorAvatars(reply.author));
+  const authorAvatars = useSelector(selectAuthorAvatars(camelCase(reply.author)));
   const colorClass = AvatarOutlineAndLabelColors[reply.authorLabel];
   const hasAnyAlert = useAlertBannerVisible(reply);
 

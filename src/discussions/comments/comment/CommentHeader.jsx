@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { camelCase } from 'lodash';
 
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ function CommentHeader({
   postType,
   actionHandlers,
 }) {
-  const authorAvatars = useSelector(selectAuthorAvatars(comment.author));
+  const authorAvatars = useSelector(selectAuthorAvatars(camelCase(comment.author)));
   const colorClass = AvatarOutlineAndLabelColors[comment.authorLabel];
   const hasAnyAlert = useAlertBannerVisible(comment);
 

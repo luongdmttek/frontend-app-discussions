@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { camelCase } from 'lodash';
 
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -18,7 +19,7 @@ import { postShape } from './proptypes';
 export function PostAvatar({
   post, authorLabel, fromPostLink, read,
 }) {
-  const authorAvatars = useSelector(selectAuthorAvatars(post.author));
+  const authorAvatars = useSelector(selectAuthorAvatars(camelCase(post.author)));
   const outlineColor = AvatarOutlineAndLabelColors[authorLabel];
 
   const avatarSize = useMemo(() => {
