@@ -28,6 +28,7 @@
   "discussions.editor.delete.response.description": "Bạn có chắc chắn muốn xóa vĩnh viễn phản hồi này?",
   "discussions.editor.delete.comment.title": "Xóa bình luận",
   "discussions.editor.delete.comment.description": "Bạn có chắc chắn muốn xóa vĩnh viễn bình luận này không?",
+  "discussions.delete.confirmation.button.cancel": "Hủy bỏ",
   "discussions.delete.confirmation.button.delete": "Xóa",
   "discussions.editor.response.response.title": "Báo cáo nội dung không phù hợp?",
   "discussions.editor.response.description": "Nhóm kiểm duyệt thảo luận sẽ xem xét nội dung này và thực hiện hành động thích hợp.",
@@ -46,7 +47,7 @@
   "discussions.learner.lastLogin": "Hoạt động lần cuối {lastActiveTime}",
   "discussions.learner.loadMostLearners": "Tải thêm",
   "discussions.learner.back": "Quay lại",
-  "discussions.learner.activityForLearner": "Hoạt động cho {username}",
+  "discussions.learner.activityForLearner": "Hoạt động của {username}",
   "discussions.learner.mostActivity": "Hầu hết các hoạt động",
   "discussions.learner.reportedActivity": "Hoạt động được báo cáo",
   "discussions.learner.recentActivity": "Hoạt động gần đây",
@@ -65,7 +66,6 @@
   "discussions.actions.unendorse": "Không thừa nhận",
   "discussions.actions.markAnswered": "Đánh dấu là đã trả lời",
   "discussions.actions.unMarkAnswered": "Bỏ đánh dấu là đã trả lời",
-  "discussions.modal.confirmation.button.cancel": "Hủy bỏ ",
   "discussions.empty.allTopics": "Tất cả hoạt động thảo luận cho các chủ đề này sẽ hiển thị ở đây.",
   "discussions.empty.allPosts": "Tất cả hoạt động thảo luận cho khóa học của bạn sẽ hiển thị ở đây.",
   "discussions.empty.myPosts": "Bài đăng mà bạn đã tương tác sẽ hiển thị ở đây.",
@@ -187,5 +187,7 @@
   "discussions.topics.find.label": "Tìm kiếm chủ đề",
   "discussions.topics.archived.label": "Đã lưu trữ",
   "discussions.topics.unnamed.label": "Danh mục chưa được đặt tên",
-  "discussions.subtopics.unnamed.label": "Tiểu thể loại chưa được đặt tên"
+  "discussions.subtopics.unnamed.label": "Tiểu thể loại chưa được đặt tên",
+  "discussion.editor.editReason.label": "{code, select,\n      grammar_spelling {Có vấn đề về ngữ pháp/chính tả}\n      needs_clarity {Nội dung cần rõ ràng}\n      academic_integrity {Có mối quan tâm về liêm chính học thuật}\n      inappropriate_language {Có ngôn ngữ không phù hợp}\n      format_change {Cần thay đổi định dạng}\n      post_type_change {Cần thay đổi loại bài đăng}\n      contains_pii {Chứa thông tin cá nhân}\n      violates_guidelines {Vi phạm nguyên tắc cộng đồng}\n      other {Khác}}",
+  "discussion.editor.closeReason.label": "{code, select,\n      academic_integrity {Bài đăng vi phạm quy tắc danh dự hoặc tính liêm chính trong học thuật}\n      read_only {Bài viết nên ở chế độ chỉ đọc}\n      duplicate {Bài đăng trùng lặp}\n      off_topic {Bài đăng lạc chủ đề}\n      other {Khác}}"
 }

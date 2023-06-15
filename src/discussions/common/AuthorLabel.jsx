@@ -44,6 +44,8 @@ function AuthorLabel({
   const showUserNameAsLink = useShowLearnersTab()
       && linkToProfile && author && author !== intl.formatMessage(messages.anonymous);
 
+  const profileName = authorName ? authorName + ' ('+ author +')' : author;
+
   const labelContents = (
     <div className={className}>
       <span
@@ -54,7 +56,7 @@ function AuthorLabel({
         role="heading"
         aria-level="2"
       >
-        {isRetiredUser ? '[Deactivated]' : authorName }
+        {isRetiredUser ? '[Deactivated]' : profileName }
       </span>
       {icon && (
         <Icon

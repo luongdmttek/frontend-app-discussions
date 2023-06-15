@@ -55,7 +55,9 @@ function CommentEditor({
 
   const initialValues = {
     comment: comment.rawBody,
-    editReasonCode: comment?.lastEdit?.reasonCode || (userIsStaff ? 'violates-guidelines' : ''),
+    editReasonCode: comment?.lastEdit?.reasonCode || (
+      userIsStaff && canDisplayEditReason ? 'violates-guidelines' : undefined
+    ),
   };
 
   const handleCloseEditor = (resetForm) => {
@@ -121,7 +123,7 @@ function CommentEditor({
                   code,
                   label,
                 }) => (
-                  <option key={code} value={code}>{label}</option>
+                  <option key={code} value={code}>{intl.formatMessage(messages.editReasonLabel, {code: code.replaceAll('-', '_')})}</option>
                 ))}
               </Form.Control>
               <FormikErrorFeedback name="editReasonCode" />

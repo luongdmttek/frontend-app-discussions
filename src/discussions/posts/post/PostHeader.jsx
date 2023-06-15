@@ -112,7 +112,7 @@ function PostHeader({
             : <h4 className="mb-0" style={{ lineHeight: '28px' }} aria-level="1" tabIndex="-1" accessKey="h">{post.title}</h4>}
           <AuthorLabel
             author={post.author || intl.formatMessage(messages.anonymous)}
-            authorName={post.authorName ? post.authorName : post.author}
+            authorName={post.authorName}
             authorLabel={post.authorLabel}
             labelColor={authorLabelColor && `text-${authorLabelColor}`}
             linkToProfile

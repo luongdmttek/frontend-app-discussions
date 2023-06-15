@@ -116,6 +116,17 @@ const messages = defineMessages({
     defaultMessage: 'No preview available',
     description: 'No preview available',
   },
+  closeReasonLabel: {
+    id: 'discussion.editor.closeReason.label',
+    defaultMessage: `{code, select,
+      academic_integrity {Post violates honour code or academic integrity}
+      read_only {Post should be read-only}
+      duplicate {Post is a duplicate}
+      off_topic {Post is off-topic}
+      other {None}
+    }`,
+    description: 'Reason content for close post',
+  },
 });
 
 export default messages;

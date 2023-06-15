@@ -39,9 +39,9 @@ function AlertBanner({
               <div className="d-flex align-items-center flex-wrap">
                 {intl.formatMessage(messages.editedBy)}
                 <span className="ml-1 mr-3">
-                  <AuthorLabel author={content.lastEdit.editorUsername} linkToProfile />
+                  <AuthorLabel author={content.lastEdit.editorUsername} authorName={content.lastEdit.editorName} linkToProfile />
                 </span>
-                {intl.formatMessage(messages.reason)}:&nbsp;{content.lastEdit.reason}
+                {intl.formatMessage(messages.reason)}:&nbsp;{intl.formatMessage(messages.editReasonLabel, {code: (content.lastEdit.reasonCode).replaceAll('-', '_')})}
               </div>
             </Alert>
           )}
@@ -50,10 +50,13 @@ function AlertBanner({
               <div className="d-flex align-items-center flex-wrap">
                 {intl.formatMessage(messages.closedBy)}
                 <span className="ml-1 ">
-                  <AuthorLabel author={content.closedBy} linkToProfile />
+                  <AuthorLabel author={content.closedBy} authorName={content.closedByName} linkToProfile />
                 </span>
                 <span className="mx-1" />
-                {content.closeReason && (`${intl.formatMessage(messages.reason)}: ${content.closeReason}`)}
+                {content.closeReason && (`
+                  ${intl.formatMessage(messages.reason)}: 
+                  ${intl.formatMessage(messages.closeReasonLabel, {code: (content.closeReasonCode).replaceAll('-', '_')})}
+                  `)}
               </div>
             </Alert>
           )}

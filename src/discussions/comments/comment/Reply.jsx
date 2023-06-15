@@ -86,7 +86,7 @@ function Reply({
           <div className="d-flex flex-row justify-content-between align-items-center mb-0.5">
             <AuthorLabel 
               author={reply.author} 
-              authorName={reply.authorName ? reply.authorName : reply.author} 
+              authorName={reply.authorName} 
               authorLabel={reply.authorLabel} 
               labelColor={colorClass && `text-${colorClass}`} 
               linkToProfile />

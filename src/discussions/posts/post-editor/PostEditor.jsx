@@ -138,7 +138,9 @@ function PostEditor({
     follow: isEmpty(post?.following) ? true : post?.following,
     anonymous: allowAnonymous ? false : undefined,
     anonymousToPeers: allowAnonymousToPeers ? false : undefined,
-    editReasonCode: post?.lastEdit?.reasonCode || (userIsStaff ? 'violates-guidelines' : ''),
+    editReasonCode: post?.lastEdit?.reasonCode || (
+      userIsStaff && canDisplayEditReason ? 'violates-guidelines' : undefined
+    ),
     cohort: post?.cohort || 'default',
   };
 
@@ -377,7 +379,7 @@ function PostEditor({
                 >
                   <option key="empty" value="">---</option>
                   {editReasons.map(({ code, label }) => (
-                    <option key={code} value={code}>{label}</option>
+                    <option key={code} value={code}>{intl.formatMessage(messages.editReasonLabel, {code: code.replaceAll('-', '_')})}</option>
                   ))}
                 </Form.Control>
                 <FormikErrorFeedback name="editReasonCode" />
