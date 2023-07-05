@@ -49,6 +49,7 @@
     "raw-loader": "4.0.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
+    "react-helmet": "^6.1.0",
     "react-mathjax-preview": "2.2.6",
     "react-redux": "7.2.6",
     "react-router": "5.2.1",
