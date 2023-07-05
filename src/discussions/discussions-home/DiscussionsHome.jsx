@@ -26,6 +26,7 @@ import BlackoutInformationBanner from './BlackoutInformationBanner';
 import DiscussionContent from './DiscussionContent';
 import DiscussionSidebar from './DiscussionSidebar';
 import InformationBanner from './InformationsBanner';
+import { Helmet } from 'react-helmet';
 
 export default function DiscussionsHome() {
   const location = useLocation();
@@ -84,6 +85,9 @@ export default function DiscussionsHome() {
     }}
     >
       {!inContext && <Header courseOrg={org} courseNumber={courseNumber} courseTitle={courseTitle} />}
+      <Helmet>
+        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+      </Helmet>
       <main className="container-fluid d-flex flex-column p-0 w-100" id="main" tabIndex="-1">
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
         <div
