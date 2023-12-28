@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import classNames from 'classnames';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Avatar, Badge, Icon } from '@edx/paragon';
+import { selectLearnerAvatar } from '../data/selectors';
 
 import { Issue, Question } from '../../../components/icons';
 import { AvatarOutlineAndLabelColors, ThreadType } from '../../../data/constants';
@@ -13,7 +15,7 @@ import { useAlertBannerVisible } from '../../data/hooks';
 import messages from './messages';
 
 export const PostAvatar = React.memo(({
-  author, postType, authorLabel, fromPostLink, read,
+  author, postType, authorLabel, fromPostLink, read, learnerAvatar,
 }) => {
   const outlineColor = AvatarOutlineAndLabelColors[authorLabel];
 
@@ -59,6 +61,7 @@ export const PostAvatar = React.memo(({
           width: avatarSize,
         }}
         alt={author}
+        src={learnerAvatar}
       />
     </div>
   );
@@ -70,6 +73,7 @@ PostAvatar.propTypes = {
   authorLabel: PropTypes.string,
   fromPostLink: PropTypes.bool,
   read: PropTypes.bool,
+  learnerAvatar: PropTypes.string
 };
 
 PostAvatar.defaultProps = {
@@ -81,6 +85,7 @@ PostAvatar.defaultProps = {
 const PostHeader = ({
   abuseFlagged,
   author,
+  authorName,
   authorLabel,
   closed,
   createdAt,
@@ -93,6 +98,7 @@ const PostHeader = ({
   const intl = useIntl();
   const showAnsweredBadge = preview && hasEndorsed && postType === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[authorLabel];
+  const learnerAvatar = useSelector(selectLearnerAvatar(author));
   const hasAnyAlert = useAlertBannerVisible({
     author, abuseFlagged, lastEdit, closed,
   });
@@ -100,7 +106,7 @@ const PostHeader = ({
   return (
     <div className={classNames('d-flex flex-fill mw-100', { 'mt-10px': hasAnyAlert && !preview })}>
       <div className="flex-shrink-0">
-        <PostAvatar postType={postType} author={author} authorLabel={authorLabel} />
+        <PostAvatar postType={postType} author={author} authorLabel={authorLabel} learnerAvatar={learnerAvatar}/>
       </div>
       <div className="align-items-center d-flex flex-row">
         <div className="d-flex flex-column justify-content-start mw-100">
@@ -125,6 +131,7 @@ const PostHeader = ({
           )}
           <AuthorLabel
             author={author || intl.formatMessage(messages.anonymous)}
+            authorFullname={authorName}
             authorLabel={authorLabel}
             labelColor={authorLabelColor && `text-${authorLabelColor}`}
             linkToProfile
@@ -143,6 +150,7 @@ PostHeader.propTypes = {
   postType: PropTypes.string.isRequired,
   authorLabel: PropTypes.string,
   author: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
   title: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   abuseFlagged: PropTypes.bool,

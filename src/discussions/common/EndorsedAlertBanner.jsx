@@ -17,6 +17,7 @@ const EndorsedAlertBanner = ({
   endorsed,
   endorsedAt,
   endorsedBy,
+  endorsedByName,
   endorsedByLabel,
 }) => {
   timeago.register('time-locale', timeLocale);
@@ -50,6 +51,7 @@ const EndorsedAlertBanner = ({
           <span className="d-flex align-items-center align-items-center flex-wrap" style={{ marginRight: '-1px' }}>
             <AuthorLabel
               author={endorsedBy}
+              authorFullname={endorsedByName}
               authorLabel={endorsedByLabel}
               linkToProfile
               alert={endorsed}
@@ -68,6 +70,7 @@ EndorsedAlertBanner.propTypes = {
   endorsed: PropTypes.bool.isRequired,
   endorsedAt: PropTypes.string,
   endorsedBy: PropTypes.string,
+  endorsedByName: PropTypes.string,
   endorsedByLabel: PropTypes.string,
 };
 

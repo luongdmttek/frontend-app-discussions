@@ -48,3 +48,7 @@ export const selectCommentCurrentPage = commentId => (
 export const selectCommentsStatus = state => state.comments.status;
 
 export const selectCommentSortOrder = state => state.comments.sortOrder;
+
+export const selectLearnerAvatar = author => state => (
+  state.learners.learnerProfiles[author]?.profileImage?.imageUrlMedium
+);

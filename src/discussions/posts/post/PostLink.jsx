@@ -14,7 +14,7 @@ import { AvatarOutlineAndLabelColors, Routes, ThreadType } from '../../../data/c
 import AuthorLabel from '../../common/AuthorLabel';
 import { DiscussionContext } from '../../common/context';
 import { discussionsPath, isPostPreviewAvailable } from '../../utils';
-import { selectThread } from '../data/selectors';
+import { selectThread, selectLearnerAvatar } from '../data/selectors';
 import messages from './messages';
 import { PostAvatar } from './PostHeader';
 import PostSummaryFooter from './PostSummaryFooter';
@@ -34,9 +34,10 @@ const PostLink = ({
     learnerUsername,
   } = useContext(DiscussionContext);
   const {
-    topicId, hasEndorsed, type, author, authorLabel, abuseFlagged, abuseFlaggedCount, read, commentCount,
+    topicId, hasEndorsed, type, author, authorName, authorLabel, abuseFlagged, abuseFlaggedCount, read, commentCount,
     unreadCommentCount, id, pinned, previewBody, title, voted, voteCount, following, groupId, groupName, createdAt,
   } = useSelector(selectThread(postId));
+  const learnerAvatar = useSelector(selectLearnerAvatar(author));
   const linkUrl = discussionsPath(Routes.COMMENTS.PAGES[page], {
     0: enableInContextSidebar ? 'in-context' : undefined,
     courseId,
@@ -83,6 +84,7 @@ const PostLink = ({
           authorLabel={authorLabel}
           fromPostLink
           read={isPostRead}
+          learnerAvatar={learnerAvatar}
         />
         <div className="d-flex flex-column flex-fill" style={{ minWidth: 0 }}>
           <div className="d-flex flex-column justify-content-start mw-100 flex-fill" style={{ marginBottom: '-3px' }}>
@@ -131,6 +133,7 @@ const PostLink = ({
           </div>
           <AuthorLabel
             author={author || intl.formatMessage(messages.anonymous)}
+            authorFullname={authorName}
             authorLabel={authorLabel}
             labelColor={authorLabelColor && `text-${authorLabelColor}`}
           />

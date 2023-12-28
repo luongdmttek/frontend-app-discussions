@@ -21,6 +21,7 @@ const AlertBanner = ({
   lastEdit,
   closed,
   closedBy,
+  closedByName,
   closeReason,
   editByLabel,
   closedByLabel,
@@ -51,6 +52,7 @@ const AlertBanner = ({
             <AlertBar
               message={intl.formatMessage(messages.editedBy)}
               author={lastEdit.editorUsername}
+              authorFullname={lastEdit.editorName}
               authorLabel={editByLabel}
               labelColor={editByLabelColor && `text-${editByLabelColor}`}
               reason={lastEdit.reason}
@@ -60,6 +62,7 @@ const AlertBanner = ({
             <AlertBar
               message={intl.formatMessage(messages.closedBy)}
               author={closedBy}
+              authorFullname={closedByName}
               authorLabel={closedByLabel}
               labelColor={closedByLabelColor && `text-${closedByLabelColor}`}
               reason={closeReason}
@@ -76,6 +79,7 @@ AlertBanner.propTypes = {
   abuseFlagged: PropTypes.bool,
   closed: PropTypes.bool,
   closedBy: PropTypes.string,
+  closedByName: PropTypes.string,
   closedByLabel: PropTypes.string,
   closeReason: PropTypes.string,
   editByLabel: PropTypes.string,

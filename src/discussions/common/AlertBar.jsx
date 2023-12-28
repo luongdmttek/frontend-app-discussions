@@ -10,6 +10,7 @@ import AuthorLabel from './AuthorLabel';
 const AlertBar = ({
   message,
   author,
+  authorFullname,
   authorLabel,
   labelColor,
   reason,
@@ -23,6 +24,7 @@ const AlertBar = ({
         <span className="ml-1">
           <AuthorLabel
             author={author}
+            authorFullname={authorFullname}
             authorLabel={authorLabel}
             labelColor={labelColor}
             linkToProfile
@@ -44,6 +46,7 @@ const AlertBar = ({
 AlertBar.propTypes = {
   message: PropTypes.string,
   author: PropTypes.string,
+  authorFullname: PropTypes.string,
   authorLabel: PropTypes.string,
   labelColor: PropTypes.string,
   reason: PropTypes.string,

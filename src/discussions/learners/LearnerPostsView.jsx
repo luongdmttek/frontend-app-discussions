@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useContext, useEffect, useMemo,
+  useCallback, useContext, useEffect, useMemo, useState
 } from 'react';
 
 import capitalize from 'lodash/capitalize';
@@ -29,6 +29,7 @@ import NoResults from '../posts/NoResults';
 import { PostLink } from '../posts/post';
 import { discussionsPath } from '../utils';
 import { fetchUserPosts } from './data/thunks';
+import { getUserProfile } from './data/api';
 import LearnerPostFilterBar from './learner-post-filter-bar/LearnerPostFilterBar';
 import messages from './messages';
 
@@ -45,7 +46,9 @@ const LearnerPostsView = () => {
   const nextPage = useSelector(selectThreadNextPage());
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   const userIsStaff = useSelector(selectUserIsStaff);
+  const learnerAvatar = useSelector(selectLearnerAvatar(username));
   const sortedPostsIds = usePostList(postsIds);
+  const [profileName, setProfileName] = useState(username)
 
   const loadMorePosts = useCallback((pageNum = undefined) => {
     const params = {
@@ -59,6 +62,13 @@ const LearnerPostsView = () => {
     dispatch(fetchUserPosts(courseId, params));
   }, [courseId, postFilter, username, userHasModerationPrivileges, userIsStaff]);
 
+  const fetchUserProfile = () => {
+    getUserProfile(username)
+    .then(data => {
+      setProfileName(data.name)
+    })
+  }
+
   const postInstances = useMemo(() => (
     sortedPostsIds?.map((postId, idx) => (
       <PostLink
@@ -66,6 +76,7 @@ const LearnerPostsView = () => {
         idx={idx}
         key={postId}
         showDivider={(sortedPostsIds.length - 1) !== idx}
+        learnerAvatar={learnerAvatar}
       />
     ))
   ), [sortedPostsIds]);
@@ -73,6 +84,7 @@ const LearnerPostsView = () => {
   useEffect(() => {
     dispatch(clearPostsPages());
     loadMorePosts();
+    fetchUserProfile();
   }, [courseId, postFilter, username]);
 
   return (
@@ -87,7 +99,7 @@ const LearnerPostsView = () => {
           alt={intl.formatMessage(messages.back)}
         />
         <div className="text-primary-500 font-style font-weight-bold py-2.5">
-          {intl.formatMessage(messages.activityForLearner, { username: capitalize(username) })}
+          {intl.formatMessage(messages.activityForLearner, { username: profileName ? profileName : username })}
         </div>
         <div style={{ padding: '18px' }} />
       </div>

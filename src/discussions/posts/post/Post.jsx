@@ -29,8 +29,8 @@ import PostHeader from './PostHeader';
 const Post = ({ handleAddResponseButton }) => {
   const { enableInContextSidebar, postId } = useContext(DiscussionContext);
   const {
-    topicId, abuseFlagged, closed, pinned, voted, hasEndorsed, following, closedBy, voteCount, groupId, groupName,
-    closeReason, authorLabel, type: postType, author, title, createdAt, renderedBody, lastEdit, editByLabel,
+    topicId, abuseFlagged, closed, pinned, voted, hasEndorsed, following, closedBy, closedByName, voteCount, groupId, groupName,
+    closeReason, authorLabel, type: postType, author, authorName, title, createdAt, renderedBody, lastEdit, editByLabel,
     closedByLabel,
   } = useSelector(selectThread(postId));
   const intl = useIntl();
@@ -168,6 +168,7 @@ const Post = ({ handleAddResponseButton }) => {
         lastEdit={lastEdit}
         closed={closed}
         closedBy={closedBy}
+        closedByName={closedByName}
         closeReason={closeReason}
         editByLabel={editByLabel}
         closedByLabel={closedByLabel}
@@ -175,6 +176,7 @@ const Post = ({ handleAddResponseButton }) => {
       <PostHeader
         abuseFlagged={abuseFlagged}
         author={author}
+        authorName={authorName}
         authorLabel={authorLabel}
         closed={closed}
         createdAt={createdAt}

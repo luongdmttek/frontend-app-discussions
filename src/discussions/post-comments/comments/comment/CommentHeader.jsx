@@ -12,10 +12,12 @@ import { useAlertBannerVisible } from '../../../data/hooks';
 const CommentHeader = ({
   author,
   authorLabel,
+  authorName,
   abuseFlagged,
   closed,
   createdAt,
   lastEdit,
+  learnerAvatar,
 }) => {
   const colorClass = AvatarOutlineAndLabelColors[authorLabel];
   const hasAnyAlert = useAlertBannerVisible({
@@ -38,9 +40,11 @@ const CommentHeader = ({
             width: '32px',
             height: '32px',
           }}
+          src={learnerAvatar}
         />
         <AuthorLabel
           author={author}
+          authorFullname={authorName}
           authorLabel={authorLabel}
           labelColor={colorClass && `text-${colorClass}`}
           linkToProfile
@@ -54,6 +58,7 @@ const CommentHeader = ({
 
 CommentHeader.propTypes = {
   author: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
   authorLabel: PropTypes.string,
   abuseFlagged: PropTypes.bool.isRequired,
   closed: PropTypes.bool,

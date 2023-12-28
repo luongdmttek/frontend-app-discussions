@@ -26,6 +26,7 @@ import {
   selectCommentResponses,
   selectCommentResponsesIds,
   selectCommentSortOrder,
+  selectLearnerAvatar,
 } from '../../data/selectors';
 import { editComment, fetchCommentResponses, removeComment } from '../../data/thunks';
 import messages from '../../messages';
@@ -41,8 +42,8 @@ const Comment = ({
 }) => {
   const comment = useSelector(selectCommentOrResponseById(commentId));
   const {
-    id, parentId, childCount, abuseFlagged, endorsed, threadId, endorsedAt, endorsedBy, endorsedByLabel, renderedBody,
-    voted, following, voteCount, authorLabel, author, createdAt, lastEdit, rawBody, closed, closedBy, closeReason,
+    id, parentId, childCount, abuseFlagged, endorsed, threadId, endorsedAt, endorsedBy, endorsedByName, endorsedByLabel, renderedBody,
+    voted, following, voteCount, authorLabel, author, authorName, createdAt, lastEdit, rawBody, closed, closedBy, closeReason,
     editByLabel, closedByLabel,
   } = comment;
   const intl = useIntl();
@@ -60,6 +61,7 @@ const Comment = ({
   const hasMorePages = useSelector(selectCommentHasMorePages(id));
   const currentPage = useSelector(selectCommentCurrentPage(id));
   const sortedOrder = useSelector(selectCommentSortOrder);
+  const learnerAvatar = useSelector(selectLearnerAvatar(author));
   const actions = useActions(ContentTypes.COMMENT, id);
   const isUserPrivilagedInPostingRestriction = useUserPostingEnabled();
 
@@ -170,6 +172,7 @@ const Comment = ({
         )}
         <EndorsedAlertBanner
           endorsed={endorsed}
+          endorsedByName={endorsedByName}
           endorsedAt={endorsedAt}
           endorsedBy={endorsedBy}
           endorsedByLabel={endorsedByLabel}
@@ -198,11 +201,13 @@ const Comment = ({
           />
           <CommentHeader
             author={author}
+            authorName={authorName}
             authorLabel={authorLabel}
             abuseFlagged={abuseFlagged}
             closed={closed}
             createdAt={createdAt}
             lastEdit={lastEdit}
+            learnerAvatar={learnerAvatar}
           />
           {isEditing ? (
             <CommentEditor

@@ -19,6 +19,7 @@ import timeLocale from './time-locale';
 const AuthorLabel = ({
   author,
   authorLabel,
+  authorFullname,
   linkToProfile,
   labelColor,
   alert,
@@ -49,6 +50,8 @@ const AuthorLabel = ({
   const showUserNameAsLink = useShowLearnersTab()
     && linkToProfile && author && author !== intl.formatMessage(messages.anonymous);
 
+  const profileName = authorFullname ? authorFullname + ' ('+ author +')' : author;
+
   const authorName = useMemo(() => (
     <span
       className={classNames('mr-1.5 font-size-14 font-style font-weight-500', {
@@ -58,16 +61,16 @@ const AuthorLabel = ({
       role="heading"
       aria-level="2"
     >
-      {isRetiredUser ? '[Deactivated]' : author}
+      {isRetiredUser ? '[Deactivated]' : profileName}
     </span>
-  ), [author, authorLabelMessage, isRetiredUser]);
+  ), [profileName, authorLabelMessage, isRetiredUser]);
 
   const labelContents = useMemo(() => (
     <>
       <OverlayTrigger
         overlay={(
           <Tooltip id={`endorsed-by-${author}-tooltip`}>
-            {author}
+            {authorFullname}
           </Tooltip>
         )}
         trigger={['hover', 'focus']}
@@ -132,6 +135,7 @@ const AuthorLabel = ({
 
 AuthorLabel.propTypes = {
   author: PropTypes.string.isRequired,
+  authorFullname: PropTypes.string,
   authorLabel: PropTypes.string,
   linkToProfile: PropTypes.bool,
   labelColor: PropTypes.string,
@@ -143,6 +147,7 @@ AuthorLabel.propTypes = {
 
 AuthorLabel.defaultProps = {
   linkToProfile: false,
+  authorFullname: null,
   authorLabel: null,
   labelColor: '',
   alert: false,

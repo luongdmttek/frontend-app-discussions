@@ -58,3 +58,7 @@ export const selectThreadSorting = () => state => state.threads.sortedBy;
 export const selectThreadFilters = () => state => state.threads.filters;
 
 export const selectThreadNextPage = () => state => state.threads.nextPage;
+
+export const selectLearnerAvatar = author => state => (
+  state.learners.learnerProfiles[author]?.profileImage?.imageUrlMedium
+);
