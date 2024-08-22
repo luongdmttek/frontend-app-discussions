@@ -2,6 +2,7 @@ import React, {
   useCallback, useContext, useEffect, useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { decode } from 'html-entities';
 
 import {
   Button, Form, Spinner, StatefulButton,
@@ -143,7 +144,7 @@ const PostEditor = ({
         topicId: values.topic,
         type: values.postType,
         title: values.title,
-        content: values.comment,
+        content: decode(values.comment),
         editReasonCode: values.editReasonCode || undefined,
       }));
     } else {
@@ -154,7 +155,7 @@ const PostEditor = ({
         topicId: values.topic,
         type: values.postType,
         title: values.title,
-        content: values.comment,
+        content: decode(values.comment),
         following: values.follow,
         anonymous: allowAnonymous ? values.anonymous : undefined,
         anonymousToPeers: allowAnonymousToPeers ? values.anonymousToPeers : undefined,
@@ -411,7 +412,7 @@ const PostEditor = ({
           />
           <FormikErrorFeedback name="comment" />
         </div>
-        <PostPreviewPanel htmlNode={values.comment} isPost editExisting={editExisting} />
+        <PostPreviewPanel htmlNode={decode(values.comment)} isPost editExisting={editExisting} />
         <div className="d-flex flex-row mt-n4 w-75 text-primary font-style">
           {!editExisting && (
           <>

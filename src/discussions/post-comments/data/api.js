@@ -74,6 +74,7 @@ export const getCommentResponses = async (commentId, {
  * @returns {Promise<{}>}
  */
 export const postComment = async (comment, threadId, parentId = null, enableInContextSidebar = false) => {
+  console.log('postComment: ', comment)
   const { data } = await getAuthenticatedHttpClient()
     .post(getCommentsApiUrl(), snakeCaseObject({
       threadId, raw_body: comment, parentId, enableInContextSidebar,
@@ -106,6 +107,8 @@ export const updateComment = async (commentId, {
     endorsed,
     editReasonCode,
   });
+
+  console.log('updateComment: ', postData)
 
   const { data } = await getAuthenticatedHttpClient()
     .patch(url, postData, { headers: { 'Content-Type': 'application/merge-patch+json' } });

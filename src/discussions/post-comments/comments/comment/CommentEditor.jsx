@@ -2,6 +2,7 @@ import React, {
   useCallback, useContext, useEffect, useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { decode } from 'html-entities';
 
 import { Button, Form, StatefulButton } from '@openedx/paragon';
 import { Formik } from 'formik';
@@ -76,10 +77,11 @@ const CommentEditor = ({
       const payload = {
         ...values,
         editReasonCode: values.editReasonCode || undefined,
+        comment: decode(values.comment),
       };
       await dispatch(editComment(id, payload));
     } else {
-      await dispatch(addComment(values.comment, threadId, parentId, enableInContextSidebar));
+      await dispatch(addComment(decode(values.comment), threadId, parentId, enableInContextSidebar));
     }
     /* istanbul ignore if: TinyMCE is mocked so this cannot be easily tested */
     if (editorRef.current) {

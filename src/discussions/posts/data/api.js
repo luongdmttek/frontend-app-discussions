@@ -113,6 +113,8 @@ export const postThread = async (
     groupId: cohort,
     enableInContextSidebar,
   });
+
+  console.log('createNewThread: ', postData)
   const { data } = await getAuthenticatedHttpClient()
     .post(getThreadsApiUrl(), postData);
   return data;
@@ -164,6 +166,8 @@ export const updateThread = async (threadId, {
     editReasonCode,
     closeReasonCode,
   });
+
+  console.log('updateThread: ', patchData)
   const { data } = await getAuthenticatedHttpClient()
     .patch(url, patchData, { headers: { 'Content-Type': 'application/merge-patch+json' } });
   return data;
