@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,11 +19,12 @@ import { selectCommentOrResponseById } from '../../data/selectors';
 import { editComment, removeComment } from '../../data/thunks';
 import messages from '../../messages';
 import CommentEditor from './CommentEditor';
+import { getUserProfile } from '../../../learners/data/api';
 
 const Reply = ({ responseId }) => {
   timeago.register('time-locale', timeLocale);
   const {
-    id, abuseFlagged, author, authorLabel, endorsed, lastEdit, closed, closedBy,
+    id, abuseFlagged, author, authorName, authorLabel, endorsed, lastEdit, closed, closedBy,
     closeReason, createdAt, threadId, parentId, rawBody, renderedBody, editByLabel, closedByLabel,
   } = useSelector(selectCommentOrResponseById(responseId));
   const intl = useIntl();
@@ -76,6 +77,18 @@ const Reply = ({ responseId }) => {
     [ContentActions.REPORT]: handleAbusedFlag,
   }), [handleEditContent, handleReplyEndorse, showDeleteConfirmation, handleAbusedFlag]);
 
+  const [learnerAvatar, setLearnerAvatar] = useState()
+  const fetchUserProfile = () => {
+    getUserProfile(author)
+    .then(data => {
+      setLearnerAvatar(data.profile_image.image_url_medium)
+    })
+  }
+
+  useEffect(() => {
+    fetchUserProfile()
+  }, [author]);
+
   return (
     <div className="d-flex flex-column mt-2.5 " data-testid={`reply-${id}`} role="listitem">
       <Confirmation
@@ -125,6 +138,7 @@ const Reply = ({ responseId }) => {
               width: '32px',
               height: '32px',
             }}
+            src={learnerAvatar}
           />
         </div>
         <div
@@ -134,6 +148,7 @@ const Reply = ({ responseId }) => {
           <div className="d-flex flex-row justify-content-between" style={{ height: '24px' }}>
             <AuthorLabel
               author={author}
+              authorFullname={authorName}
               authorLabel={authorLabel}
               labelColor={colorClass && `text-${colorClass}`}
               linkToProfile

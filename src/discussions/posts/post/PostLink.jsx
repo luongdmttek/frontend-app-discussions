@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -18,6 +18,7 @@ import { selectThread } from '../data/selectors';
 import messages from './messages';
 import { PostAvatar } from './PostHeader';
 import PostSummaryFooter from './PostSummaryFooter';
+import { getUserProfile } from '../../learners/data/api';
 
 const PostLink = ({
   idx,
@@ -34,9 +35,10 @@ const PostLink = ({
     learnerUsername,
   } = useContext(DiscussionContext);
   const {
-    topicId, hasEndorsed, type, author, authorLabel, abuseFlagged, abuseFlaggedCount, read, commentCount,
+    topicId, hasEndorsed, type, author, authorName, authorLabel, abuseFlagged, abuseFlaggedCount, read, commentCount,
     unreadCommentCount, id, pinned, previewBody, title, voted, voteCount, following, groupId, groupName, createdAt,
   } = useSelector(selectThread(postId));
+  const [learnerAvatar, setLearnerAvatar] = useState()
   const linkUrl = discussionsPath(Routes.COMMENTS.PAGES[page], {
     0: enableInContextSidebar ? 'in-context' : undefined,
     courseId,
@@ -55,6 +57,22 @@ const PostLink = ({
       window.location.pathname.includes(postId)),
     [window.location.pathname],
   );
+
+  const fetchUserProfile = () => {
+    getUserProfile(author)
+    .then(data => {
+      setLearnerAvatar(data.profile_image.image_url_medium)
+    })
+  }
+
+  useEffect(() => {
+    fetchUserProfile()
+    // Object.keys(users).map((user, i) => {
+    //   console.log('user: ' + users[user].profile.image.imageUrlMedium);
+    //   learnerAvatar = users[user].profile.image.imageUrlMedium
+    //   })
+  }, [author]);
+  
 
   return (
     <Link
@@ -83,6 +101,7 @@ const PostLink = ({
           authorLabel={authorLabel}
           fromPostLink
           read={isPostRead}
+          learnerAvatar={learnerAvatar}
         />
         <div className="d-flex flex-column flex-fill" style={{ minWidth: 0 }}>
           <div className="d-flex flex-column justify-content-start mw-100 flex-fill" style={{ marginBottom: '-3px' }}>
@@ -131,6 +150,7 @@ const PostLink = ({
           </div>
           <AuthorLabel
             author={author || intl.formatMessage(messages.anonymous)}
+            authorFullname={authorName}
             authorLabel={authorLabel}
             labelColor={authorLabelColor && `text-${authorLabelColor}`}
           />

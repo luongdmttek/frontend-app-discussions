@@ -26,6 +26,7 @@ import {
   selectCommentResponses,
   selectCommentResponsesIds,
   selectCommentSortOrder,
+  selectLearnerAvatar,
 } from '../../data/selectors';
 import { editComment, fetchCommentResponses, removeComment } from '../../data/thunks';
 import messages from '../../messages';
@@ -33,6 +34,7 @@ import { PostCommentsContext } from '../../postCommentsContext';
 import CommentEditor from './CommentEditor';
 import CommentHeader from './CommentHeader';
 import Reply from './Reply';
+import { getUserProfile } from '../../../learners/data/api';
 
 const Comment = ({
   commentId,
@@ -41,8 +43,8 @@ const Comment = ({
 }) => {
   const comment = useSelector(selectCommentOrResponseById(commentId));
   const {
-    id, parentId, childCount, abuseFlagged, endorsed, threadId, endorsedAt, endorsedBy, endorsedByLabel, renderedBody,
-    voted, following, voteCount, authorLabel, author, createdAt, lastEdit, rawBody, closed, closedBy, closeReason,
+    id, parentId, childCount, abuseFlagged, endorsed, threadId, endorsedAt, endorsedBy, endorsedByName, endorsedByLabel, renderedBody,
+    voted, following, voteCount, authorLabel, author, authorName, createdAt, lastEdit, rawBody, closed, closedBy, closeReason,
     editByLabel, closedByLabel,
   } = comment;
   const intl = useIntl();
@@ -60,8 +62,21 @@ const Comment = ({
   const hasMorePages = useSelector(selectCommentHasMorePages(id));
   const currentPage = useSelector(selectCommentCurrentPage(id));
   const sortedOrder = useSelector(selectCommentSortOrder);
+  // const learnerAvatar = useSelector(selectLearnerAvatar(author));
   const actions = useActions(ContentTypes.COMMENT, id);
   const isUserPrivilagedInPostingRestriction = useUserPostingEnabled();
+
+  const [learnerAvatar, setLearnerAvatar] = useState()
+  const fetchUserProfile = () => {
+    getUserProfile(author)
+    .then(data => {
+      setLearnerAvatar(data.profile_image.image_url_medium)
+    })
+  }
+
+  useEffect(() => {
+    fetchUserProfile()
+  }, [author]);
 
   useEffect(() => {
     // If the comment has a parent comment, it won't have any children, so don't fetch them.
@@ -170,6 +185,7 @@ const Comment = ({
         )}
         <EndorsedAlertBanner
           endorsed={endorsed}
+          endorsedByName={endorsedByName}
           endorsedAt={endorsedAt}
           endorsedBy={endorsedBy}
           endorsedByLabel={endorsedByLabel}
@@ -198,11 +214,13 @@ const Comment = ({
           />
           <CommentHeader
             author={author}
+            authorName={authorName}
             authorLabel={authorLabel}
             abuseFlagged={abuseFlagged}
             closed={closed}
             createdAt={createdAt}
             lastEdit={lastEdit}
+            learnerAvatar={learnerAvatar}
           />
           {isEditing ? (
             <CommentEditor

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -25,12 +25,13 @@ import ClosePostReasonModal from './ClosePostReasonModal';
 import messages from './messages';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
+import { getUserProfile } from '../../learners/data/api';
 
 const Post = ({ handleAddResponseButton }) => {
   const { enableInContextSidebar, postId } = useContext(DiscussionContext);
   const {
-    topicId, abuseFlagged, closed, pinned, voted, hasEndorsed, following, closedBy, voteCount, groupId, groupName,
-    closeReason, authorLabel, type: postType, author, title, createdAt, renderedBody, lastEdit, editByLabel,
+    topicId, abuseFlagged, closed, pinned, voted, hasEndorsed, following, closedBy, closedByName, voteCount, groupId, groupName,
+    closeReason, authorLabel, type: postType, author, authorName, title, createdAt, renderedBody, lastEdit, editByLabel,
     closedByLabel,
   } = useSelector(selectThread(postId));
   const intl = useIntl();
@@ -47,6 +48,17 @@ const Post = ({ handleAddResponseButton }) => {
   const [isClosing, showClosePostModal, hideClosePostModal] = useToggle(false);
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   const displayPostFooter = following || voteCount || closed || (groupId && userHasModerationPrivileges);
+  const [learnerAvatar, setLearnerAvatar] = useState()
+  const fetchUserProfile = () => {
+    getUserProfile(author)
+    .then(data => {
+      setLearnerAvatar(data.profile_image.image_url_medium)
+    })
+  }
+
+  useEffect(() => {
+    fetchUserProfile()
+  }, [author]);
 
   const handleDeleteConfirmation = useCallback(async () => {
     await dispatch(removeThread(postId));
@@ -168,6 +180,7 @@ const Post = ({ handleAddResponseButton }) => {
         lastEdit={lastEdit}
         closed={closed}
         closedBy={closedBy}
+        closedByName={closedByName}
         closeReason={closeReason}
         editByLabel={editByLabel}
         closedByLabel={closedByLabel}
@@ -175,6 +188,7 @@ const Post = ({ handleAddResponseButton }) => {
       <PostHeader
         abuseFlagged={abuseFlagged}
         author={author}
+        authorName={authorName}
         authorLabel={authorLabel}
         closed={closed}
         createdAt={createdAt}
@@ -182,6 +196,7 @@ const Post = ({ handleAddResponseButton }) => {
         lastEdit={lastEdit}
         postType={postType}
         title={title}
+        learnerAvatar={learnerAvatar}
       />
       <div className="d-flex mt-14px text-break font-style text-primary-500">
         <HTMLLoader htmlNode={renderedBody} componentId="post" cssClassName="html-loader" testId={postId} />
